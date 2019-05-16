@@ -40,7 +40,7 @@ pipeline {
             }
             post {
                 success {
-                    archiveArtifacts 'dist/add2vals.py' 
+                    archiveArtifacts 'dist/add2vals' 
                 }
             }
         }
