@@ -1,5 +1,8 @@
 pipeline {
     agent none
+    options {
+        skipStagesAfterUnstable()
+    }
     stages {
         stage('Build') {
             agent {
@@ -11,36 +14,35 @@ pipeline {
                 sh 'python -m py_compile sources/add2vals.py sources/calc.py'
             }
         }
-        stage('Test') { 
+        stage('Test') {
             agent {
                 docker {
-                    image 'qnib/pytest' 
+                    image 'qnib/pytest'
                 }
             }
             steps {
-                sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py' 
+                sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
             }
             post {
                 always {
-                    junit 'test-reports/results.xml' 
+                    junit 'test-reports/results.xml'
                 }
             }
         }
-        stage('Deliver'){
+        stage('Deliver') { 
             agent {
                 docker {
-                    image 'cdrx/pyinstaller-linux:python2'
+                    image 'cdrx/pyinstaller-linux:python2' 
                 }
             }
             steps {
-                sh 'pyinstaller --onefile sources/add2vals'
+                sh 'pyinstaller --onefile sources/add2vals.py' 
             }
             post {
                 success {
-                    archiveArtifacts 'dist/add2vals'
+                    archiveArtifacts 'dist/add2vals' 
                 }
             }
         }
     }
-
 }
