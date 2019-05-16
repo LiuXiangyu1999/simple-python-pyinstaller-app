@@ -26,5 +26,20 @@ pipeline {
                 }
             }
         }
+        stage('Deliver'){
+            agent {
+                docker {
+                    imgae 'cdrx/pyinstaller-linux:python2'
+                }
+            }
+            steps {
+                sh 'pyinstaller --onefile sources/add2vals'
+            }
+            post {
+                success {
+                    archiveArtifacts 'dist/add2vals'
+                }
+            }
+        }
     }
 }
