@@ -29,6 +29,16 @@ pipeline {
                 }
             }
         }
+        stage('Static Analysis') {
+            agent {
+                docker {
+                    image 'python:2-alpine'
+                }
+            }
+            steps {
+                sh 'pylint sources/calc.py'
+            }
+        }
         stage('Deliver') { 
             agent {
                 docker {
