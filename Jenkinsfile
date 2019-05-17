@@ -4,7 +4,7 @@ pipeline {
         skipStagesAfterUnstable()
     }
     stages {
-        stage('Build') {
+        stage('Build Test') {
             agent {
                 docker {
                     image 'python:2-slim'
@@ -21,7 +21,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'pylint sources/calc.py || True'
+                sh 'pylint sources/calc.py'
             }
         }
         stage('Test') {
