@@ -17,7 +17,7 @@ pipeline {
         stage('Static Analysis') {
             agent {
                 docker {
-                    image 'python:2-alpine'
+                    image 'muccg/pylint'
                 }
             }
             steps {
