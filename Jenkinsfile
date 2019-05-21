@@ -17,7 +17,7 @@ pipeline {
         stage('Static Analysis') {
             agent {
                 docker {
-                    image 'clburlison/pylint'
+                    image 'clburlison/pylint || true'
                 }
             }
             steps {
