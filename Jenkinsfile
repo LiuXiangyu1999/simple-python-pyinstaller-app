@@ -17,11 +17,11 @@ pipeline {
         stage('Static Analysis') {
             agent {
                 docker {
-                    image 'clburlison/pylint || true'
+                    image 'clburlison/pylint'
                 }
             }
             steps {
-                sh 'pylint sources/calc.py'
+                sh 'pylint sources/calc.py || true'
             }
         }
         stage('Test') {
