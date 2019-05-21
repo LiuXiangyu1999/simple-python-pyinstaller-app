@@ -11,7 +11,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'pylint sources/calc.py || trues'
+                sh 'pylint sources/calc.py || true'
             }
         }
         stage('Build') {
