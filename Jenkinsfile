@@ -2,9 +2,19 @@ pipeline {
     agent none
     options {
         skipStagesAfterUnstable()
-    }
+    } 
     stages {
-        stage('Build Test') {
+    	stage('Static Analysis') {
+            agent {
+                docker {
+                    image 'clburlison/pylint'
+                }
+            }
+            steps {
+                sh 'pylint sources/calc.py || trues'
+            }
+        }
+        stage('Build') {
             agent {
                 docker {
                     image 'python:2-slim'
@@ -13,17 +23,7 @@ pipeline {
             steps {
                 sh 'python -m py_compile sources/add2vals.py sources/calc.py'
             }
-        }
-        stage('Static Analysis') {
-            agent {
-                docker {
-                    image 'clburlison/pylint'
-                }
-            }
-            steps {
-                sh 'pylint sources/calc.py || true'
-            }
-        }
+        } 
         stage('Test') {
             agent {
                 docker {
