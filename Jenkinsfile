@@ -14,6 +14,7 @@ pipeline {
                 sh 'pylint sources/calc.py || true'
             }
         }
+<<<<<<< HEAD
         stage('Build') {
             agent {
                 docker {
@@ -24,6 +25,8 @@ pipeline {
                 sh 'python -m py_compile sources/add2vals.py sources/calc.py'
             }
         } 
+=======
+>>>>>>> bc8c21ac59e7564ec092e79f6bd0ec64a1bb4cb3
         stage('Test') {
             agent {
                 docker {
